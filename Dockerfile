@@ -1,7 +1,7 @@
 FROM node:17
-RUN git clone https://github.com/Cinkafox/MinkaBot.git
+RUN git clone https://github.com/Cinkafox/MinkaBot.git /MinkaBot
 WORKDIR /MinkaBot
-COPY package*.json ./
-RUN npm install
+RUN ls
 COPY . .
-CMD [ "node", "index.js" ]
+RUN npm install
+RUN node index.js
