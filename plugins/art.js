@@ -38,7 +38,8 @@ let b = async (bot,ictl,name) => {
 	try{
 		schematic = await Schematic.read(await fs.readFile(path.resolve(__dirname, '../schematics/' + name + '.schematic')), bot.version);
 	}catch{
-		return "Не найдена схема!"
+		bot.chat("Не найдена схема!");
+		return "Не найдена схема!";
 	}
 	const ta = bot.entity.position.floored();
 	const at = ta.offset(0.5, 0, 0.5);
@@ -98,9 +99,7 @@ PluginManager.add("арт", (args, bot) => {
 	if(args.args[2] == undefined) return args.message.GM + "Недостаточно аргументов!"
 	if(args.args[3]!== undefined)
 	num = Number(args.args[3])
-	b(bot,num,args.args[2]).then(e=>{
-		console.log(e)
-	})
+	b(bot,num,args.args[2])
 	
 });
 PluginManager.addhelp("арт","Строим арты! 1) название схемы 2)с какого блока начать (необязательно)");
