@@ -25,9 +25,9 @@ PluginManager.add("права",(args,bot)=>{
 							permission.writeUser(nick,args.args[6],permissions)
 						return args.message.GM +"Успешно добавлено " + nick;
 				case "удалить":
-						if(args.args.length < 3) return "Недостаточно аргументов!"+args.args.length-2 + " из 1";
-						permission.deleteUser(args[3])
-						return args.message.GM +"Успешно удален игрок " + args[3];
+						if(args.args.length < 4) return "Недостаточно аргументов!"+args.args.length-3 + " из 1";
+						permission.deleteUser(args.args[4])
+						return args.message.GM +"Успешно удален игрок " + args.args[4];
 					break;
 			}
 			break;
@@ -50,15 +50,20 @@ PluginManager.add("права",(args,bot)=>{
 						permission.writeGroup(nick,permission,args.args[6])
 					return args.message.GM +"Успешно добавлено " + nick;
 				case "удалить":
-						if(args.args.length < 3) return args.message.GM +"Недостаточно аргументов!"+args.args.length-2 + " из 1";
-						permission.deleteGroup(args[3])
-						return args.message.GM +"Успешно удалена группа " + args[3];
+						if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 1";
+						permission.deleteGroup(args.args[4])
+						return args.message.GM +"Успешно удалена группа " + args.args[4];
 					break;
 			}
 			break;
 	}
 
 });
+PluginManager.add("блокировать",(args,bot)=>{
+	permission.writeUser(args.args[2],"nil",[])
+	return args.message.GM +"Успешно заблокирован " + args.args[2]
+});
+
 PluginManager.addhelp("права","игрок,группа");
 
 PluginManager.addhelp("права игрок","список,добавить,удалить");

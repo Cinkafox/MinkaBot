@@ -1,7 +1,7 @@
 const mineflayer = require("mineflayer");
 const fs = require('fs');
+const clpath = "./CustomJoins"
 const config = JSON.parse(fs.readFileSync('config.json'));
-const bdj = require("./libs/bdj");
 const ChatParser = require("./libs/Chatparser");
 const Permissions = require("./libs/permissions");
 const bot = mineflayer.createBot(config.bot);
@@ -9,7 +9,6 @@ const {Vec3} = require("vec3");
 const PluginManager = require("./libs/PluginManager");
 PluginManager.bot = bot;
 PluginManager.load();
-const actions = [{message:">> Ожидайте завершения проверки...",action:"rec"},{message:"Авторизация | Войдите в игру, введя пароль /login",action:()=>{bot.chat("/l 12341")}}]
 let alias = [config.bot.username,"биба"]
 
 bot.once('spawn',()=>{preInit()});
@@ -17,23 +16,16 @@ bot.once('kicked',console.log);
 bot.on('message',(message)=>{console.log(message.toString())});
 
 function preInit(){
-    bdj.check(bot,actions);
-    
-    //bdj.antbotchest(bot)
-    bot.once("message",() => {
-        bot.setControlState('forward',true);
-        bot.lookAt(new Vec3(-4,139,-15));5
-            setTimeout(() => {
-                bot.setControlState('forward', false);
-                init();
-            },6000);
-    });
-
-
+    try{
+        require(clpath + "/" + config.bot.host + ".js")(bot,()=>{init()});
+    }catch(e){
+        fs.writeFileSync(clpath + "/" + config.bot.host + ".js", fs.readFileSync(clpath + "/default.js"));
+        console.log("Customjoin сервера создан!Настройте его под себя в папке CustomJoins!")
+        bot.end();
+        process.exit(1);
+    }
 }
-/*
 
-*/
 
 function init(){
     console.log("done")

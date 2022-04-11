@@ -46,48 +46,57 @@ let b = async (bot,ictl,name) => {
 
 
 
-	let dd = async (x, func) => {
+	let dd = async (x,zz, func) => {
 		if (!(x % 2 === 0))
-			for (let z = size.z - 1; z >= 0; z--) {
-				if (await func(x, z) === "obr") z++
+			for (let z = size.z - 1 - zz; z >= 0; z--) {
+				let o = await func(x, z);
+				if (o === "obr") z+=2
+				if (o === "brk") break;
 			}
 		else
-			for (let z = 1; z <= size.z - 1; z++) {
-				if (await func(x, z) === "obr") z--
+			for (let z = 1 + zz; z <= size.z - 1; z++) {
+				let o = await func(x, z);
+				if (o === "obr") z-=2
+				if (o === "brk") break;
 			}
 	}
+	
 	for (let x = ictl; x < size.x; x++) {
 		let bool = (x % 2 === 0);
 		let num = Number(!bool);
-		await bot.creative.flyTo(at.offset(1 + x + Number(bool)*0.1, 0, (size.z - 1) * num + (2 - 4 * num)))
+
+		let funct = async (x, z) => {
+			let equiper = await equip(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name, bot);
+			await bot.equip(equiper, "hand");
+			console.log(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name)
+			await bot._genericPlace(bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))), new Vec3(0, 0, (1 - 2 * num)), { swingArm: 'right', forceLook: 'ignore' })
+			await bot.creative.flyTo(at.offset(x, 0, z + (2 - 4 * num)))
+	
+		}
+
+		await bot.creative.flyTo(at.offset(1 + x + 0.1, 0, (size.z - 1) * num + (2 - 4 * num)))
 		await bot.look((45 + 90 * num) * Math.PI / 180, 0)
 		let equiper = await equip(schematic.getBlock(new Vec3(x + 1, 2, (size.z - 1) * num + 1)).name, bot);
 		await bot.equip(equiper, "hand");
 		await bot._genericPlace(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)), new Vec3(1, 0, 0), { swingArm: 'right', forceLook: 'ignore' })
 		console.log(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)).name + " " + ta.offset(x - 1, 1, size.z * num))
 		if(bot.blockAt(ta.offset(x-1, 1, (size.z - 1) * num)).name == "air"){
-			x--;
+			let uz = 0;
+			await dd(x-1,0,async (x,z)=>{
+				if(bot.blockAt(ta.offset(x, 1, z))?.name === "air"){
+					uz = z;
+					return "brk"
+				}
+			})
+			x-=1;
+			console.log(ta.offset(x, 1, uz));
+			await dd(x,uz,funct);
 			continue;
 		}
 		vb = 0;
 		await bot.creative.flyTo(at.offset(x, 0, (size.z - 1) * num + (2 - 4 * num)))
 		await bot.look(180 * num * Math.PI / 180, 0)
-
-		let funct = async (x, z) => {
-			equiper = await equip(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name, bot);
-			await bot.equip(equiper, "hand");
-			//console.log(bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*2)).name + " " + schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name)
-			/*
-			if(bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))).name === "air"){
-				return "obr"
-			}
-			*/
-			await bot._genericPlace(bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))), new Vec3(0, 0, (1 - 2 * num)), { swingArm: 'right', forceLook: 'ignore' })
-			await bot.creative.flyTo(at.offset(x, 0, z + (2 - 4 * num)))
-
-		}
-
-		await dd(x, funct)
+		await dd(x,0, funct)
 		//console.log(at.offset(x + 1, 0, size.z * Number(bool) - (1 - 2 * Number(bool)) * 2) + bool)
 		await bot.creative.flyTo((at.offset(x + 1, 0, size.z * Number(bool) - (1 - 2 * Number(bool)) * 2)))
 	}
