@@ -17,10 +17,12 @@ bot.on('message',(message)=>{console.log(message.toString())});
 
 function preInit(){
     try{
-        require(clpath + "/" + config.bot.host + ".js")(bot,()=>{init()});
+        let cj = require(clpath + "/" + config.bot.host + ".js");
+        ChatParser.setEnv(cj.regex,cj.global);
+        cj.preInit(bot,()=>{init()});
     }catch(e){
         fs.writeFileSync(clpath + "/" + config.bot.host + ".js", fs.readFileSync(clpath + "/default.js"));
-        console.log("Customjoin сервера создан!Настройте его под себя в папке CustomJoins!")
+        console.log("Customjoin сервера создан!Настройте его под себя в папке CustomJoins!" + e)
         bot.end();
         process.exit(1);
     }

@@ -1,5 +1,7 @@
 const bdj = require("../libs/bdj");
 const {Vec3} = require("vec3");
+const regex = /«(?<G>.*)» \| (.(.*?).){0,1} .(.*?). (?<Nick>.*?) ➥ (?<Chat>.*)|\[.*? (?<NickL>.*?) -> я\] (?<ChatL>.*)/gm;
+let global = "Ⓖ";
 
 function preInit(bot,success){
     const action = [{message:">> Ожидайте завершения проверки...",action:"rec"},{message:"Авторизация | Войдите в игру, введя пароль /login",action:()=>{bot.chat("/l 12341")}}];
@@ -18,4 +20,4 @@ function preInit(bot,success){
 
 }
 
-module.exports = preInit
+module.exports = {regex,preInit,global}

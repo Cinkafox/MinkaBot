@@ -1,5 +1,10 @@
-const regex = /«(?<G>.*)» \| (.(.*?).){0,1} .(.*?). (?<Nick>.*?) ➥ (?<Chat>.*)|\[.*? (?<NickL>.*?) -> я\] (?<ChatL>.*)/gm;
+let regex = /«(?<G>.*)» \| (.(.*?).){0,1} .(.*?). (?<Nick>.*?) ➥ (?<Chat>.*)|\[.*? (?<NickL>.*?) -> я\] (?<ChatL>.*)/gm;
 let global = "Ⓖ";
+
+let setEnv = (regex1,global1)=>{
+    regex = regex1
+    global = global1
+}
 let parse = (rawtext) => {
     
     let m = rawtext.matchAll(regex)
@@ -16,4 +21,4 @@ let parse = (rawtext) => {
     }
 }
 
-module.exports={parse};
+module.exports={parse,setEnv};
