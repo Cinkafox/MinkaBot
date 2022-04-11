@@ -90,7 +90,7 @@ let b = async (bot,ictl,name) => {
 			})
 			x-=1;
 			console.log(ta.offset(x, 1, uz));
-			await dd(x,uz,funct);
+			//await dd(x,uz,funct);
 			continue;
 		}
 		vb = 0;

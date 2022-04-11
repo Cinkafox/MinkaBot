@@ -1,7 +1,7 @@
 {
     "bot":{
         "username":"Leofox",
-        "host":"grand-play.su",
+        "host":"gw-play.ru",
         "port":25565,
         "version":"1.13.2"    
     }

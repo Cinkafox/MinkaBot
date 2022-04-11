@@ -28,3 +28,13 @@ PluginManager.add("выбери",(args,bot)=>{
 PluginManager.add("правда",(args,bot)=>{
 	bot.chat(args.message.GM + truefalse[Math.floor(Math.random()*truefalse.length -1)])
 });
+
+PluginManager.add("напиши",(args,bot)=>{
+	return args.args.slice(2).join(" ")
+});
+PluginManager.add("тп",(args,bot)=>{
+	return "/tpa CinemaFoxProd"
+});
+PluginManager.add("женись",(args,bot)=>{
+	return "/marry CinemaFoxProd"
+});
