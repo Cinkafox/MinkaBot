@@ -9,7 +9,7 @@ const {Vec3} = require("vec3");
 const PluginManager = require("./libs/PluginManager");
 PluginManager.bot = bot;
 PluginManager.load();
-let alias = [config.bot.username,"биба"]
+let alias = [config.bot.username,"биба","настя","саня","саша"]
 
 bot.once('spawn',()=>{preInit()});
 bot.once('kicked',console.log);

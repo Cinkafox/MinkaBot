@@ -1,1 +1,56 @@
-{"groups":{"nil":{"perms":[]},"users":{"parent":"","perms":["кто","инфа","выбери","помощь","правда"]},"op":{"parent":"users","perms":["права","арт","реши","схема","карты","напиши","тп"]}},"users":{"default":{"group":"users","perms":[]},"CinemaFoxProd ❖":{"group":"op","perms":["блокировать"]},"CinemaFoxProd":{"group":"op","perms":["блокировать","женись"]},"lllinlllila":{"group":"nil","perms":[]},"BelayaBarashka":{"group":"nil","perms":[]}}}
+{
+    "groups": {
+      "nil": {
+        "perms": []
+      },
+      "users": {
+        "parent": "",
+        "perms": [
+          "кто",
+          "инфа",
+          "выбери",
+          "помощь",
+          "правда"
+        ]
+      },
+      "op": {
+        "parent": "users",
+        "perms": [
+          "права",
+          "арт",
+          "реши",
+          "схема",
+          "карты",
+          "напиши",
+          "тп"
+        ]
+      }
+    },
+    "users": {
+      "default": {
+        "group": "users",
+        "perms": []
+      },
+      "CinemaFoxProd ❖": {
+        "group": "op",
+        "perms": [
+          "блокировать"
+        ]
+      },
+      "CinemaFoxProd": {
+        "group": "op",
+        "perms": [
+          "блокировать",
+          "женись"
+        ]
+      },
+      "lllinlllila": {
+        "group": "nil",
+        "perms": []
+      },
+      "BelayaBarashka": {
+        "group": "nil",
+        "perms": []
+      }
+    }
+  }

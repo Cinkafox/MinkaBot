@@ -4,7 +4,7 @@ const regex = /\[(?<G>.*)\] (.(.*?).){0,1} .*\| .(.*?). (?<Nick>.*?) (➥|➦) (
 let global = "G";
 
 function preInit(bot,success){
-    const action = [{message:"GreenWorld>> Ожидайте завершения проверки...",action:"rec"},{message:"Для авторизации пиши - /login [пароль]",action:()=>{bot.chat("/l 12341")}}];
+    const action = [{message:"GreenWorld>> Ожидайте завершения проверки...",action:"rec"},{message:"[GREENWORLD] Сессия недействительна.",action:()=>{bot.chat("/l 12341")}},{message:"Для авторизации пиши - /login [пароль]",action:()=>{bot.chat("/l 12341")}}];
     bdj.check(bot,action);
     
     //bdj.antbotchest(bot)
