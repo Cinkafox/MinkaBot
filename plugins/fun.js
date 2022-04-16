@@ -33,8 +33,8 @@ PluginManager.add("напиши",(args,bot)=>{
 	return args.args.slice(2).join(" ")
 });
 PluginManager.add("тп",(args,bot)=>{
-	return "/tpa CinemaFoxProd"
+	return "/tpa " + args.args[2]
 });
 PluginManager.add("женись",(args,bot)=>{
-	return "/marry CinemaFoxProd"
+	return "/marry " + args.args[2]
 });

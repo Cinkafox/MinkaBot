@@ -90,6 +90,7 @@ let b = async (bot,ictl,name) => {
 			})
 			x-=1;
 			console.log(ta.offset(x, 1, uz));
+			await bot._genericPlace(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)), new Vec3(1, 0, 0), { swingArm: 'right', forceLook: 'ignore' })
 			//await dd(x,uz,funct);
 			continue;
 		}
