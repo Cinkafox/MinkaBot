@@ -50,13 +50,13 @@ let b = async (bot,ictl,name) => {
 		if (!(x % 2 === 0))
 			for (let z = size.z - 1 - zz; z >= 0; z--) {
 				let o = await func(x, z);
-				if (o === "obr") z+=2
+				if (o === "obr") z+=6
 				if (o === "brk") break;
 			}
 		else
 			for (let z = 1 + zz; z <= size.z - 1; z++) {
 				let o = await func(x, z);
-				if (o === "obr") z-=2
+				if (o === "obr") z-=6
 				if (o === "brk") break;
 			}
 	}
@@ -64,12 +64,20 @@ let b = async (bot,ictl,name) => {
 	for (let x = ictl; x < size.x; x++) {
 		let bool = (x % 2 === 0);
 		let num = Number(!bool);
-
+		let ber = Number(bool);
+		let sidi = true;
 		let funct = async (x, z) => {
 			let equiper = await equip(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name, bot);
 			await bot.equip(equiper, "hand");
-			console.log(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name)
-			await bot._genericPlace(bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))), new Vec3(0, 0, (1 - 2 * num)), { swingArm: 'right', forceLook: 'ignore' })
+			let face = new Vec3(0, 0, (1 - 2 * num));
+			let px = x;
+			let fl = 'ignore'
+			if((z*ber+(size.z-z)*num)>4 && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*4)).name === "air" && sidi){
+				console.log("proebanno,nazad")
+				return "obr"
+			}
+			console.log("Placepos:"+ta.offset(px, 1, z - (1 - 2 * num)) + " BotPos:"+ bot.entity.position)
+			await bot._genericPlace(bot.blockAt(ta.offset(px, 1, z - (1 - 2 * num))), face, { swingArm: 'right', forceLook: fl })
 			await bot.creative.flyTo(at.offset(x, 0, z + (2 - 4 * num)))
 	
 		}
@@ -81,17 +89,8 @@ let b = async (bot,ictl,name) => {
 		await bot._genericPlace(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)), new Vec3(1, 0, 0), { swingArm: 'right', forceLook: 'ignore' })
 		console.log(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)).name + " " + ta.offset(x - 1, 1, size.z * num))
 		if(bot.blockAt(ta.offset(x-1, 1, (size.z - 1) * num)).name == "air"){
-			let uz = 0;
-			await dd(x-1,0,async (x,z)=>{
-				if(bot.blockAt(ta.offset(x, 1, z))?.name === "air"){
-					uz = z;
-					return "brk"
-				}
-			})
 			x-=1;
-			console.log(ta.offset(x, 1, uz));
 			await bot._genericPlace(bot.blockAt(ta.offset(x - 1, 1, (size.z - 1) * num)), new Vec3(1, 0, 0), { swingArm: 'right', forceLook: 'ignore' })
-			//await dd(x,uz,funct);
 			continue;
 		}
 		vb = 0;
