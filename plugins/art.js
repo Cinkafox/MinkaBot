@@ -9,6 +9,7 @@ const mcData = require('minecraft-data')(PluginManager.bot.version);
 const Item = require('prismarine-item')(PluginManager.bot.version);
 const size = { x: 128, z: 128 };
 const normalizedPath = path.join(__dirname, "../schematics");
+const erbl = 6;
 
 
 let equip = async (blockName, bot) => {
@@ -50,13 +51,13 @@ let b = async (bot,ictl,name) => {
 		if (!(x % 2 === 0))
 			for (let z = size.z - 1 - zz; z >= 0; z--) {
 				let o = await func(x, z);
-				if (o === "obr") z+=6
+				if (o === "obr") z+=(2+erbl)
 				if (o === "brk") break;
 			}
 		else
 			for (let z = 1 + zz; z <= size.z - 1; z++) {
 				let o = await func(x, z);
-				if (o === "obr") z-=6
+				if (o === "obr") z-=(2+erbl)
 				if (o === "brk") break;
 			}
 	}
@@ -72,7 +73,7 @@ let b = async (bot,ictl,name) => {
 			let face = new Vec3(0, 0, (1 - 2 * num));
 			let px = x;
 			let fl = 'ignore'
-			if((z*ber+(size.z-z)*num)>4 && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*4)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*3)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*2)).name === "air"){
+			if((z*ber+(size.z-z)*num)>erbl && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*erbl)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))).name === "air"){
 				
 				console.log("proebanno,nazad")
 				return "obr"
