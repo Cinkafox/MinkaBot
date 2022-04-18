@@ -72,7 +72,8 @@ let b = async (bot,ictl,name) => {
 			let face = new Vec3(0, 0, (1 - 2 * num));
 			let px = x;
 			let fl = 'ignore'
-			if((z*ber+(size.z-z)*num)>4 && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*4)).name === "air" && sidi){
+			if((z*ber+(size.z-z)*num)>4 && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*4)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*3)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*2)).name === "air"){
+				
 				console.log("proebanno,nazad")
 				return "obr"
 			}
