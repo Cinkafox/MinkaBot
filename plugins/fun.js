@@ -33,7 +33,7 @@ PluginManager.add("напиши",(args,bot)=>{
 	return args.args.slice(2).join(" ")
 });
 PluginManager.add("тп",(args,bot)=>{
-	return "/tpa " + args.args[2]
+	return "/tpa " + args.message.NICK
 });
 PluginManager.add("женись",(args,bot)=>{
 	return "/marry " + args.args[2]

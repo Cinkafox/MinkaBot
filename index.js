@@ -1,7 +1,7 @@
 const mineflayer = require("mineflayer");
 const fs = require('fs');
 const clpath = "./CustomJoins"
-const config = JSON.parse(fs.readFileSync('config.json'));
+const config = require("./config.json");
 const ChatParser = require("./libs/Chatparser");
 const Permissions = require("./libs/permissions");
 const bot = mineflayer.createBot(config.bot);
@@ -10,6 +10,7 @@ const PluginManager = require("./libs/PluginManager");
 PluginManager.bot = bot;
 PluginManager.load();
 let alias = [config.bot.username,"биба","настя","саня","саша"]
+
 
 bot.once('spawn',()=>{preInit()});
 bot.once('kicked',console.log);
@@ -44,7 +45,13 @@ function onChat(rawmessage){
     if(alias.indexOf(args[0]) == -1 || message.NICK==config.bot.username) return;
     const plugin = PluginManager.execute()[args[1]];
     if(plugin !== undefined && Permissions.check(Permissions.readUser(message.NICK),args[1])){
-        const out = plugin({message:message,args:args},bot)
+        let out;
+        try{
+            out = plugin({message:message,args:args},bot);
+        }catch(e){
+            out =  message.GM + "Какая то ошибка при выполнении!"
+            console.log(e.message);
+        }
         if(out !== undefined)
             bot.chat(out);
     }

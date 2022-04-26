@@ -11,11 +11,11 @@ function preInit(bot,success){
     console.log("joining")
     bot.once("message",() => {
         bot.setControlState('forward',true);
-        bot.lookAt(new Vec3(-4,139,-15));
+        bot.lookAt(new Vec3(-348,63,440));
             setTimeout(() => {
                 bot.setControlState('forward', false);
                 success();
-            },6000);
+            },10000);
     });
 
 }

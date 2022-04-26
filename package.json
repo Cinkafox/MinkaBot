@@ -15,6 +15,8 @@
   "dependencies": {
     "minecraft-data": "^2.220.0",
     "mineflayer": "^4.2.0",
+    "mineflayer-builder": "^1.0.1",
+    "mineflayer-pathfinder": "^2.0.0",
     "pngjs-image": "^0.11.7",
     "prismarine-item": "^1.11.3",
     "prismarine-nbt": "^2.2.1",
