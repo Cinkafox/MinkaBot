@@ -58,8 +58,20 @@ class Build{
     }
 
     async place(x,y,z){
-        console.log(x, " " , y ," ",z)
-        await this.placeWithFace(x,y,z,this.getPossibleFace(x,y,z))
+        console.log(x, " " , y ," ",z + " " + this.at.offset(x,y,z));
+        await this.placeWithFace(x,y,z,this.getPossibleFace(x,y,z));
+    }
+
+    async placeV3(vec3){
+        
+        await this.place(vec3.x,vec3.y,vec3.z);
+    }
+    check(x,y,z){
+        console.log("Block:"+this.bot.blockAt(this.at.offset(x,y,z))?.name + " Schem:" + this.schematic.getBlock(new Vec3(x, y, z))?.name);
+        return (this.bot.blockAt(this.at.offset(x,y,z))?.name == this.schematic.getBlock(new Vec3(x, y, z)).name);
+    }
+    checkV3(vec3){
+        return this.check(vec3.x,vec3.y,vec3.z);
     }
 }
 
