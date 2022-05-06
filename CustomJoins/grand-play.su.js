@@ -9,9 +9,6 @@ function onStart(bot,success){
     bot.once("message",(m) => {
         let ac = m.toString();
         console.log("ssfafa:"+ac)
-        if(ac === "Авторизация | Войдите в игру, введя пароль /login" || ac==="Авторизация | Авторизация успешно пройдена" || ac===""){
-            return onStart(bot,success);
-        }
         if(ac === "➣ Выберите портал для игры"){
             if(ch<4){
                 console.log("SFfaf")
@@ -22,13 +19,16 @@ function onStart(bot,success){
             success();
             return "donre"
         }
-        if(ac === "АНТИ БОТ ≫ Пройди капчу перед тем как двигаться!"){
+        else if(ac === "АНТИ БОТ ≫ Пройди капчу перед тем как двигаться!"){
             ch = 0
             console.log("prepare")
             bdj.antbotchest(bot)
             console.log("Fig" + bot.currentWindow)
             return onStart(bot,success);
         }   
+        else{
+            return onStart(bot,success);
+        }
     });
 }
 
