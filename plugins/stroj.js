@@ -13,6 +13,28 @@ const Block = require('prismarine-block')(PluginManager.bot.version)
 const mcData = require('minecraft-data')(PluginManager.bot.version)
 const Item = require('prismarine-item')(PluginManager.bot.version);
 
+function getObjFace(obj){
+  if(obj.west){
+    return "west"
+  }
+  if(obj.south){
+    return "south"
+  }
+  if(obj.north){
+    return "north"
+  }
+  if(obj.east){
+    return "east"
+  }
+  if(obj.up){
+    return "up"
+  }
+  if(obj.down){
+    return "down"
+  }
+  return undefined
+}
+
 function FaceFromP(facing){
   if (facing === 'north') return new Vec3(0, 0, 1);
   else if (facing === 'south') return new Vec3(0, 0, -1);
@@ -85,9 +107,9 @@ async function avi(bot,name){
         let face = new Vec3(0,-1,0);
         const faces = build.getPossibleDirections(action.state, action.pos)
         
-        const { facing ,  is3D } = build.getFacing(action.state, properties.facing)
         rfc = FaceFromP(properties.facing);
-
+        let sabam = FaceFromP(getObjFace(properties))?.scaled(-1)
+        rfc = rfc ? rfc : sabam
         const blockin = build.blocks[action.state]
         const data = facingData[blockin.name]
         face = faces[0]
@@ -105,7 +127,7 @@ async function avi(bot,name){
         */
 
         flyface = rfc ? rfc : faces[0]
-        if(properties.face == "wall")
+        if(properties.face == "wall" || properties.west !== undefined)
         face=flyface
         
 
@@ -119,17 +141,23 @@ async function avi(bot,name){
 
         const ref = to.plus(face)
         const refBlock = bot.blockAt(ref)
+
+
+        if(refBlock.name == "air"){
+          build.removeAction(action)
+          continue;
+        }
         console.log(refBlock.name)
         const sneak = interactable.indexOf(refBlock.name) > 0
         const delta = to.minus(ref)
-        console.log("-------------------",FaceFromP(facing)," ",rfc," ",face," ",data?.faceDirection," ",data?.inverted)
+        console.log("-------------------"," ",rfc," ",face," ",data?.faceDirection," ",data?.inverted)
         console.log("-=-=-="+action.pos.y," ",lasty)
         //if(action.pos.y < lasty) await bot.chat("/gamemode 3")
         await bot.creative.flyTo(bpos.offset(0.5,0.5,0.5))
         //if(action.pos.y < lasty) await bot.chat("/gamemode 1")
 
         if (sneak) bot.setControlState('sneak', true)
-        console.log(success + "-======================" + properties)
+        console.log(success + "-======================" + JSON.stringify(properties))
         await bot._placeBlockWithOptions(refBlock, face.scaled(-1), { half , swingArm: 'right', forceLook:(properties.facing==undefined)})
         if (sneak) bot.setControlState('sneak', false)
 
