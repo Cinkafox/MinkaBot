@@ -16,6 +16,22 @@ function onChat(funct){
 function execute(){
     return plugins;
 }
+function exchat(message){
+    onChatT.forEach((f)=>{
+        f(message)
+    })
+}
+function remove(name){
+    if(plugins[name])
+        delete plugins[name]
+    else{
+        const index = onChatT.indexOf(5);
+        if (index > -1) {
+            onChatT.splice(index, 1); 
+        }
+
+    }
+}
 function addhelp(name,text){
     help[name]=text;
 }
@@ -35,4 +51,4 @@ function load(){
         }
     });
 }
-module.exports = {add,execute,addhelp,gethelp,bot,load,onChat}
+module.exports = {add,execute,exchat,addhelp,gethelp,bot,load,onChat,remove}

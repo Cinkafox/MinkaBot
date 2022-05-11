@@ -38,3 +38,20 @@ PluginManager.add("тп",(args,bot)=>{
 PluginManager.add("женись",(args,bot)=>{
 	return "/marry " + args.args[2]
 });
+
+let bark = false
+
+PluginManager.add("ищейка",(args,bot)=>{
+	bark = !bark
+	if(bark) bot.chat(args.message.GM + "Гавкаю!")
+	else bot.chat(args.message.GM + "Не гавкаю!")
+})
+
+PluginManager.onChat((message)=>{
+	if(bark){
+		let nick = message.NICK
+		if(nick == "❖") nick="КиноЛисПрод"
+		if(message.MESSAGE.split(" ").indexOf("ищу") >= 0)
+		PluginManager.bot.chat(message.GM + "ДА ДА Бл*ть ищи ищи всем похрен на тебя " + nick)
+	}
+})

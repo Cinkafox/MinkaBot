@@ -72,27 +72,21 @@ let b = async (bot,ictl,name) => {
 		let bool = (x % 2 === 0);
 		let num = Number(!bool);
 		let ber = Number(bool);
-		let sidi = true;
 		let funct = async (x, z) => {
 			let equiper = await equip(schematic.getBlock(new Vec3(x + 1, 2, z + 1)).name, bot);
 			await bot.equip(equiper, "hand");
 			let face = new Vec3(0, 0, (1 - 2 * num));
 			let px = x;
 			let fl = 'ignore'
-			//let refblock = bot.blockAt(ta.offset(px, 1, z - (1 - 2 * num)));
-			let refblock = bot.world.getBlock(ta.offset(px, 1, z - (1 - 2 * num)))
-			if(!refblock){
-				refblock = new Block(registry.blocksByName.stone, registry.biomesByName.plains,0)
-				refblock.position = ta.offset(px, 1, z - (1 - 2 * num))
-				console.log("Sobaka " + ta.offset(px, 1, z - (1 - 2 * num)) + " ")
-				//return ["obr",0]
-			}
-			if((z*ber+(size.z-z)*num)>erbl && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*erbl)).name === "air" && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num))).name === "air"){
+			let refpos = ta.offset(px, 1, z - (1 - 2 * num))
+			//let refblock = bot.blockAt(refpos);
+			let refblock = bot.world.getBlock(refpos)
+			if((z*ber+(size.z-z)*num)>erbl && (bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*erbl)) != undefined && bot.blockAt(ta.offset(x, 1, z - (1 - 2 * num)*erbl)).name === "air")){
 				console.log("proebanno,nazad")
 				return ["obr",erbl]
 			}
 			
-			console.log("Placepos:"+ta.offset(px, 1, z - (1 - 2 * num)) + " BotPos:"+ bot.entity.position + " " + refblock.name)
+			console.log("Placepos:"+refpos + " BotPos:"+ bot.entity.position + " " + refblock.name)
 			await bot._genericPlace(refblock, face, { swingArm: 'right', forceLook: fl })
 			await bot.creative.flyTo(at.offset(x, 0, z + (2 - 4 * num)))
 	

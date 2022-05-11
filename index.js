@@ -42,9 +42,15 @@ function onChat(rawmessage){
     const message = ChatParser.parse(rawmessage);
     if(message == null) return;
     const args = message.MESSAGE.split(" ");
-    if(alias.indexOf(args[0]) == -1 || message.NICK==config.bot.username) return;
-    const plugin = PluginManager.execute()[args[1]];
-    if(plugin !== undefined && Permissions.check(Permissions.readUser(message.NICK),args[1])){
+
+    PluginManager.exchat(message)
+
+    if(message.GM !== "/er"){
+        if(alias.indexOf(args[0]) == -1 || message.NICK==config.bot.username) return;
+        args.shift()
+    }
+    const plugin = PluginManager.execute()[args[0]];
+    if(plugin !== undefined && Permissions.check(Permissions.readUser(message.NICK),args[0])){
         let out;
         try{
             out = plugin({message:message,args:args},bot);
