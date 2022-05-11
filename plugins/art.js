@@ -115,16 +115,16 @@ let b = async (bot,ictl,name) => {
 PluginManager.add("арт", (args, bot) => {
 	bot.chat("/gamemode creative");
 	let num = 0
-	if(args.args[2] == undefined) return args.message.GM + "Недостаточно аргументов!"
-	if(args.args[3]!== undefined)
-	num = Number(args.args[3])
-	b(bot,num,args.args[2])
+	if(args.args[1] == undefined) return args.message.GM + "Недостаточно аргументов!"
+	if(args.args[2]!== undefined)
+	num = Number(args.args[2])
+	b(bot,num,args.args[1])
 	
 });
 PluginManager.addhelp("арт","Строим арты! 1) название схемы 2)с какого блока начать (необязательно)");
 
 PluginManager.add("схема",(args, bot) => {
-	switch(args.args[2]){
+	switch(args.args[1]){
 		case "список":
 			let output = "";
 			fs.readdirSync(normalizedPath).forEach(function (file) {
@@ -133,9 +133,9 @@ PluginManager.add("схема",(args, bot) => {
 			bot.chat(args.message.GM+ "Файлы в схемах - " + output);
 			break;
 		case "скачать":
-			console.log(args.args[3] + args.args[4])
-			var file = fss.createWriteStream(normalizedPath + "/" + args.args[3] + ".schematic");
-			var request = http.get(args.args[4], function(response) {
+			console.log(args.args[2] + args.args[3])
+			var file = fss.createWriteStream(normalizedPath + "/" + args.args[2] + ".schematic");
+			var request = http.get(args.args[3], function(response) {
 				response.pipe(file);
 				file.on('finish', function() {
 					bot.chat(args.message.GM + "Готово");

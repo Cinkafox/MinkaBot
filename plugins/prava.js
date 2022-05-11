@@ -2,57 +2,57 @@ const PluginManager = require("../libs/PluginManager");
 const permission = require("../libs/permissions")
 
 PluginManager.add("права",(args,bot)=>{
-	switch(args.args[2]){
+	switch(args.args[1]){
 		case "игрок":
-			switch(args.args[3]){
+			switch(args.args[2]){
 				case "список":
 						return args.message.GM +"Список пользователей--"+permission.userlist().join(" ");
 					break;
 				case "добавить":
-						if(args.args.length < 5) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
-						let nick = args.args[4];
+						if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
+						let nick = args.args[3];
 						let permissions = []
 						try{
-							permissions = eval(args.args[5])
+							permissions = eval(args.args[4])
 						
 							if(!Array.isArray(permissions)) return args.message.GM +"Ошибка!";
 						}catch{return args.message.GM +"Фатальня ошибка!";}
 						if(nick=="себя")
 							nick = args.message.NICK
-						if(args.args.length < 6)
+						if(args.args.length < 5)
 							permission.writeUser(nick,permission.defaultgrp,permissions)
 						else
-							permission.writeUser(nick,args.args[6],permissions)
+							permission.writeUser(nick,args.args[5],permissions)
 						return args.message.GM +"Успешно добавлено " + nick;
 				case "удалить":
-						if(args.args.length < 4) return "Недостаточно аргументов!"+args.args.length-3 + " из 1";
-						permission.deleteUser(args.args[4])
-						return args.message.GM +"Успешно удален игрок " + args.args[4];
+						if(args.args.length < 3) return "Недостаточно аргументов!"+args.args.length-3 + " из 1";
+						permission.deleteUser(args.args[3])
+						return args.message.GM +"Успешно удален игрок " + args.args[3];
 					break;
 			}
 			break;
 		case "группа":
-			switch(args.args[3]){
+			switch(args.args[2]){
 				case "список":
 						return args.message.GM +"Список групп--"+permission.grouplist().join(" ");
 					break;
 				case "добавить":
-					if(args.args.length < 5) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
-					let nick = args.args[4];
+					if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
+					let nick = args.args[3];
 					let permissions = []
 					try{
-						permissions = eval(args.args[5])
+						permissions = eval(args.args[4])
 						if(!Array.isArray(permission)) return args.message.GM +"Ошибка!";
 					}catch{return args.message.GM +"Фатальня ошибка!";}
-					if(args.args.length < 6)
+					if(args.args.length < 5)
 						permission.writeGroup(nick,permission)
 					else
-						permission.writeGroup(nick,permission,args.args[6])
+						permission.writeGroup(nick,permission,args.args[5])
 					return args.message.GM +"Успешно добавлено " + nick;
 				case "удалить":
-						if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 1";
-						permission.deleteGroup(args.args[4])
-						return args.message.GM +"Успешно удалена группа " + args.args[4];
+						if(args.args.length < 3) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 1";
+						permission.deleteGroup(args.args[3])
+						return args.message.GM +"Успешно удалена группа " + args.args[3];
 					break;
 			}
 			break;
@@ -60,8 +60,8 @@ PluginManager.add("права",(args,bot)=>{
 
 });
 PluginManager.add("блокировать",(args,bot)=>{
-	permission.writeUser(args.args[2],"nil",[])
-	return args.message.GM +"Успешно заблокирован " + args.args[2]
+	permission.writeUser(args.args[1],"nil",[])
+	return args.message.GM +"Успешно заблокирован " + args.args[1]
 });
 
 PluginManager.addhelp("права","игрок,группа");

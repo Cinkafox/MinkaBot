@@ -199,9 +199,9 @@ async function avi(bot,name){
   
 PluginManager.add("строй",(args,bot)=>{
   bot.chat("/gamemode creative");
-  if(args.args[2] == undefined) return args.message.GM + "Недостаточно аргументов!"
+  if(args.args[1] == undefined) return args.message.GM + "Недостаточно аргументов!"
   setTimeout(()=>{
-    avi(bot,args.args[2]);
+    avi(bot,args.args[1]);
   },300)
   
   

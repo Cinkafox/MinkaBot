@@ -55,8 +55,8 @@ let a = async (bot,from,to)=>{
 }
 PluginManager.add("карты",(args,bot)=>{
 	bot.chat("/gamemode creative")
-	const from = 1000+Number(args.args[2]);
-	const to = 1000 +Number(args.args[3]);
+	const from = 1000+Number(args.args[1]);
+	const to = 1000 +Number(args.args[2]);
 	setTimeout(()=>{
 		a(bot,from,to);
 	},100)
