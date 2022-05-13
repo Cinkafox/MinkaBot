@@ -20,12 +20,11 @@ class PluginManager{
             f(message)
         })
     }
-
     /**
      * выполняемая функция
      * @callback functas
      * @param {{args:[String],message:{GM:String,NICK:String,MESSAGE:String}}} args
-     * @param {bot} bot 
+     * @param {import('mineflayer').Bot} bot 
      */
     /**
      * Добавление функции
