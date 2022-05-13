@@ -7,14 +7,13 @@ const Permissions = require("./libs/permissions");
 const bot = mineflayer.createBot(config.bot);
 const {Vec3} = require("vec3");
 const PluginManager = require("./libs/PluginManager");
+
 PluginManager.bot = bot;
-PluginManager.load();
 let alias = [config.bot.username,"биба","настя","саня","саша"]
 
 
 bot.once('spawn',()=>{preInit()});
 bot.once('kicked',console.log);
-bot.on('message',(message)=>{console.log(message.toString())});
 
 function preInit(){
     try{
@@ -31,9 +30,17 @@ function preInit(){
 
 
 function init(){
-    console.log("done")
+    PluginManager.loadFromDir("../plugins");
+    console.log("Модули загруженны!Действительный список:" + Object.keys(PluginManager.plugins))
     PluginManager.add("помощь",(args,bot)=>{
-        bot.chat(args.message.GM+PluginManager.gethelp(args.args.slice(2).join(" ")));
+        let t = PluginManager.help[args.args.slice(1).join(" ")];
+        if(t == undefined) t = "Помощь не найдена!"
+        bot.chat(args.message.GM+t);
+    })
+    PluginManager.add("рестарт",(args,bot)=>{
+        bot.chat("Перезапускаюсь!")
+        bot.removeAllListeners()
+        init();
     })
     bot.on('message',(message)=>{onChat(message.toString())})
 }
@@ -42,15 +49,14 @@ function onChat(rawmessage){
     const message = ChatParser.parse(rawmessage);
     if(message == null) return;
     const args = message.MESSAGE.split(" ");
-
-    PluginManager.exchat(message)
-
+    PluginManager.executeChat(message)
     if(message.GM !== "/er"){
         if(alias.indexOf(args[0]) == -1 || message.NICK==config.bot.username) return;
         args.shift()
     }
-    const plugin = PluginManager.execute()[args[0]];
+    const plugin = PluginManager.execute(args[0]);
     if(plugin !== undefined && Permissions.check(Permissions.readUser(message.NICK),args[0])){
+        console.log(message.NICK + " ввел:" + message.MESSAGE)
         let out;
         try{
             out = plugin({message:message,args:args},bot);
@@ -64,5 +70,5 @@ function onChat(rawmessage){
 }
 
 bot.once("end",()=>{
-    bot.off('message',(message)=>{onChat(message.toString())})
+    bot.removeAllListeners()
 })

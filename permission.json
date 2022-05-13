@@ -38,7 +38,8 @@
       "group": "op",
       "perms": [
         "блокировать",
-        "ищейка"
+        "ищейка",
+        "рестарт"
       ]
     },
     "CinemaFoxProd": {
@@ -46,16 +47,6 @@
       "perms": [
         "блокировать",
         "женись"
-      ]
-    },
-    "lllinlllila": {
-      "group": "nil",
-      "perms": []
-    },
-    "OnixVlog": {
-      "group": "op",
-      "perms": [
-        "секс"
       ]
     }
   }

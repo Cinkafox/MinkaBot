@@ -1,3 +1,4 @@
+const permission = require('./libs/permissions')
 var fs = require('fs');
 function translit(str)
 {
@@ -13,6 +14,7 @@ function translit(str)
     return res;  
 }
 console.log(process.argv[2])
+permission.addpermGroup(permission.defaultgrp,process.argv[2])
 var stream = fs.createWriteStream("plugins/"+translit(process.argv[2])+".js");
 stream.once('open', function(fd) {
   stream.write('const PluginManager = require("../libs/PluginManager");\n\nPluginManager.add("'+ process.argv[2] +'",(args,bot)=>{\n\tbot.chat(args.message.NICK);\n});\n');

@@ -14,7 +14,7 @@ PluginManager.add("кто",(args,bot)=>{
 	if(bot.players[naz] != null || naz === "ты")
 		return (args.message.GM + "Я думаю что " + naz + " " + who1[Math.floor(Math.random()*who1.length)] + " " + who2[Math.floor(Math.random()*who2.length)])
 	else
-		return (args.message.GM + "Думаю что " + naz + " у нас " + bot.players[Object.keys(bot.players)[Math.floor(Math.random()*Object.keys(bot.players).length)]].username)
+		return (args.message.GM + "Я Думаю что " + naz + " у нас " + bot.players[Object.keys(bot.players)[Math.floor(Math.random()*Object.keys(bot.players).length)]].username)
 
 });
 PluginManager.add("инфа",(args,bot)=>{
@@ -47,7 +47,7 @@ PluginManager.add("ищейка",(args,bot)=>{
 	else bot.chat(args.message.GM + "Не гавкаю!")
 })
 
-PluginManager.onChat((message)=>{
+PluginManager.addChat((message)=>{
 	if(bark){
 		let nick = message.NICK
 		if(nick == "❖") nick="КиноЛисПрод"

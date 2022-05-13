@@ -5,25 +5,19 @@ let global = "Ⓖ";
 
 let ch = 0;
 function onStart(bot,success){
-    console.log("Dab")
     bot.once("message",(m) => {
         let ac = m.toString();
-        console.log("ssfafa:"+ac)
         if(ac === "➣ Выберите портал для игры"){
             if(ch<4){
-                console.log("SFfaf")
                 ch++;
                 return onStart(bot,success);
             }
-            console.log("dond" + ch)
             success();
             return "donre"
         }
         else if(ac === "АНТИ БОТ ≫ Пройди капчу перед тем как двигаться!"){
             ch = 0
-            console.log("prepare")
             bdj.antbotchest(bot)
-            console.log("Fig" + bot.currentWindow)
             return onStart(bot,success);
         }   
         else{

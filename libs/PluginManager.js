@@ -1,54 +1,79 @@
 const fs = require("fs");
 const path = require("path");
-const plpath = "../plugins"
-const normalizedPath = path.join(__dirname, plpath);
 
-let bot = null;
-let plugins = {};
-let onChatT = [];
-let help = {};
-function add(name,func){
-    plugins[name]=func;
+function requireUncached(module) {
+    delete require.cache[require.resolve(module)];
+    require(module);
 }
-function onChat(funct){
-    onChatT[onChatT.length] = funct
-}
-function execute(){
-    return plugins;
-}
-function exchat(message){
-    onChatT.forEach((f)=>{
-        f(message)
-    })
-}
-function remove(name){
-    if(plugins[name])
-        delete plugins[name]
-    else{
-        const index = onChatT.indexOf(5);
-        if (index > -1) {
-            onChatT.splice(index, 1); 
-        }
 
+class PluginManager{
+    bot
+    plugins = {}
+    onChat = []
+    help = {}
+    execute(name){
+        if(this.plugins[name] != undefined) return this.plugins[name]()
+        return undefined
     }
-}
-function addhelp(name,text){
-    help[name]=text;
-}
-function gethelp(name){
-    let t = help[name];
-    if(t == undefined)
-        return "Помощь не найдена!";
-    return t;
+    executeChat(message){
+        this.onChat.forEach((f)=>{
+            f(message)
+        })
+    }
+
+    /**
+     * выполняемая функция
+     * @callback functas
+     * @param {{args:[String],message:{GM:String,NICK:String,MESSAGE:String}}} args
+     * @param {bot} bot 
+     */
+    /**
+     * Добавление функции
+     * @param {String} name 
+     * @param {functas} funct
+     */
+    add(name,funct){
+        this.plugins[name] = funct
+    }
+    addhelp(name,text){
+        this.help[name]=text;
+    }
+    /**
+     * выполняемая функция
+     * @callback functas1
+     * @param {{GM:String,NICK:String,MESSAGE:String}} message
+     */
+    /**
+     * выполнение при вводе чата
+     * @param {functas1} funct 
+     */
+    addChat(funct){
+        this.onChat.push(funct)
+    }
+    remove(name){
+        if(this.plugins[name])
+            delete this.plugins[name]
+        else{
+            const index = this.onChatT.indexOf(name);
+            if (index > -1) {
+                this.onChatT.splice(index, 1); 
+            }
+        }
+    }
+    loadFromDir(dir){
+        this.onChat = []
+        const normalizedPath = path.join(__dirname, dir);
+        fs.readdirSync(normalizedPath).forEach(function (file) {
+            try {
+                console.log("Loading " + file)
+                requireUncached(dir+"/"+file)
+            }catch(e){
+                console.log(e)
+            }
+        });
+    }
+
 }
 
-function load(){
-    fs.readdirSync(normalizedPath).forEach(function (file) {
-        try {
-            require(plpath+"/"+file)
-        }catch(e){
-            console.log(e)
-        }
-    });
-}
-module.exports = {add,execute,exchat,addhelp,gethelp,bot,load,onChat,remove}
+module.exports = new PluginManager()
+

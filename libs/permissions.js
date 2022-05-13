@@ -24,7 +24,7 @@ let readGroup = (group) => {
     return Grp;
 }
 
-let writeUser = (nick, group = defaultgrp, perms = []) => {
+let writeUser = (nick,perms = [],group = defaultgrp) => {
     let obj = readFile();
     obj.users[nick] = {group,perms}
     writeFile(obj)
@@ -58,7 +58,19 @@ let deleteUser = (user) => {
     writeFile(obj)
 }
 
+let addpermGroup = (group,perm)=>{
+    let obj = readFile();
+    obj.groups[group].perms.push(perm)
+    writeFile(obj)
+}
+
+let addpermUser = (nick,perm)=>{
+    let obj = readFile();
+    obj.users[nick].perms.push(perm)
+    writeFile(obj)
+}
+
 let check = (arr,elem) =>{
     return (arr.indexOf(elem) !== -1);
 }
-module.exports = {check,writeGroup,writeUser,readGroup,readUser,userlist,grouplist,deleteUser,deleteGroup,defaultgrp,defaultusr}
+module.exports = {check,writeGroup,writeUser,readGroup,readUser,userlist,grouplist,deleteUser,deleteGroup,addpermGroup,addpermUser,defaultgrp,defaultusr}

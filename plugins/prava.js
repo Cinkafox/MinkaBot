@@ -6,54 +6,44 @@ PluginManager.add("права",(args,bot)=>{
 		case "игрок":
 			switch(args.args[2]){
 				case "список":
-						return args.message.GM +"Список пользователей--"+permission.userlist().join(" ");
-					break;
+					return args.message.GM +"Список пользователей--"+permission.userlist().join(" ");
 				case "добавить":
-						if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
-						let nick = args.args[3];
-						let permissions = []
-						try{
-							permissions = eval(args.args[4])
-						
-							if(!Array.isArray(permissions)) return args.message.GM +"Ошибка!";
-						}catch{return args.message.GM +"Фатальня ошибка!";}
-						if(nick=="себя")
-							nick = args.message.NICK
-						if(args.args.length < 5)
-							permission.writeUser(nick,permission.defaultgrp,permissions)
-						else
-							permission.writeUser(nick,args.args[5],permissions)
+					try{
+						let nick = args.args[3]
+						if(nick == "себя") nick = args.message.NICK
+ 						const perms = eval(args.args[4])
+						const group = args.args[5]
+						if(!nick || !perms) return "недостаточно аргументов!"
+						if(!Array.isArray(perms)) return args.message.GM + "Неверно введено массив!"
+						permission.writeUser(nick,perms,group)
 						return args.message.GM +"Успешно добавлено " + nick;
+					}catch{
+						return args.message.GM + "Ошибка!"
+					}
 				case "удалить":
-						if(args.args.length < 3) return "Недостаточно аргументов!"+args.args.length-3 + " из 1";
 						permission.deleteUser(args.args[3])
 						return args.message.GM +"Успешно удален игрок " + args.args[3];
-					break;
 			}
 			break;
 		case "группа":
 			switch(args.args[2]){
 				case "список":
-						return args.message.GM +"Список групп--"+permission.grouplist().join(" ");
-					break;
+					return args.message.GM +"Список групп--"+permission.grouplist().join(" ");
 				case "добавить":
-					if(args.args.length < 4) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 2";
-					let nick = args.args[3];
-					let permissions = []
 					try{
-						permissions = eval(args.args[4])
-						if(!Array.isArray(permission)) return args.message.GM +"Ошибка!";
-					}catch{return args.message.GM +"Фатальня ошибка!";}
-					if(args.args.length < 5)
-						permission.writeGroup(nick,permission)
-					else
-						permission.writeGroup(nick,permission,args.args[5])
-					return args.message.GM +"Успешно добавлено " + nick;
+						const group = args.args[3]
+						const perms = eval(args.args[4])
+						const parent = args.args[5]
+						if(!group || !perms) return "недостаточно аргументов!"
+						if(!Array.isArray(perms)) return args.message.GM + "Неверно введено массив!"
+						permission.writeGroup(group,perms,parent)
+						return args.message.GM +"Успешно добавлено " + group;
+					}catch{
+						return args.message.GM + "Ошибка!"
+					}
 				case "удалить":
-						if(args.args.length < 3) return args.message.GM +"Недостаточно аргументов!"+args.args.length-3 + " из 1";
-						permission.deleteGroup(args.args[3])
-						return args.message.GM +"Успешно удалена группа " + args.args[3];
-					break;
+					permission.deleteGroup(args.args[3])
+					return args.message.GM +"Успешно удалена группа " + args.args[3];
 			}
 			break;
 	}
