@@ -12,7 +12,7 @@ class PluginManager{
     onChat = []
     help = {}
     execute(name){
-        if(this.plugins[name] != undefined) return this.plugins[name]()
+        if(this.plugins[name] != undefined) return this.plugins[name]
         return undefined
     }
     executeChat(message){
