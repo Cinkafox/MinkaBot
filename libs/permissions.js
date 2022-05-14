@@ -60,14 +60,18 @@ let deleteUser = (user) => {
 
 let addpermGroup = (group,perm)=>{
     let obj = readFile();
-    obj.groups[group].perms.push(perm)
-    writeFile(obj)
+    if(obj.groups[group].perms.indexOf(perm) == -1){
+        obj.groups[group].perms.push(perm)
+        writeFile(obj)
+    }
 }
 
 let addpermUser = (nick,perm)=>{
     let obj = readFile();
-    obj.users[nick].perms.push(perm)
-    writeFile(obj)
+    if(obj.users[nick].perms.indexOf(perm) == -1){
+        obj.users[nick].perms.push(perm)
+        writeFile(obj)
+    }
 }
 
 let check = (arr,elem) =>{

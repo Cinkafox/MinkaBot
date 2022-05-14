@@ -127,7 +127,7 @@ PluginManager.add("схема",(args, bot) => {
 	switch(args.args[1]){
 		case "список":
 			let output = "";
-			fs.readdirSync(normalizedPath).forEach(function (file) {
+			fss.readdirSync(normalizedPath).forEach(function (file) {
 				output = output + file + " и ";
 			});
 			bot.chat(args.message.GM+ "Файлы в схемах - " + output);
