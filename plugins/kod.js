@@ -24,7 +24,7 @@ PluginManager.add("код",(args,bot)=>{
 			if(args.args[1] == code){
 				const NICK = args.message.NICK
 				console.log("success " + NICK)
-				permission.writeUser(NICK,"op",[])
+				permission.writeUser(NICK,[],"op")
 				code = undefined;
 			}
 		}
