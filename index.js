@@ -5,7 +5,6 @@ const config = require("./config.json");
 const ChatParser = require("./libs/Chatparser");
 const Permissions = require("./libs/permissions");
 const bot = mineflayer.createBot(config.bot);
-const {Vec3} = require("vec3");
 const PluginManager = require("./libs/PluginManager");
 
 PluginManager.bot = bot;
@@ -59,7 +58,9 @@ function onChat(rawmessage){
         console.log(message.NICK + " ввел:" + message.MESSAGE)
         let out;
         try{
+            console.time(args[0])
             out = plugin({message:message,args:args},bot);
+            console.timeEnd(args[0])
         }catch(e){
             out =  message.GM + "Какая то ошибка при выполнении!"
             console.log(e.message);

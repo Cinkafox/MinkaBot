@@ -8,7 +8,6 @@ const interactable = require('../libs/interactable.json')
 const facingData = require('../libs/facingData.json')
 const forbitten = require('../libs/forbittenitems.json')
 const { Vec3 } = require("vec3");
-const { BlockList } = require("net");
 const Block = require('prismarine-block')(PluginManager.bot.version)
 const mcData = require('minecraft-data')(PluginManager.bot.version)
 const Item = require('prismarine-item')(PluginManager.bot.version);

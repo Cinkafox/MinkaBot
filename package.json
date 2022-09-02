@@ -21,6 +21,7 @@
     "prismarine-item": "^1.11.3",
     "prismarine-nbt": "^2.2.1",
     "prismarine-schematic": "^1.2.2",
+    "readline-sync": "^1.4.10",
     "vec3": "^0.1.7"
   }
 }

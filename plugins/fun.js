@@ -2,17 +2,19 @@ const PluginManager = require("../libs/PluginManager");
 let who1 = ["Зеленый","Мудрый","Вкусный","Приятный","Злой","Добрый","Старый","Молодой","Гендерфлюидный","Жирный","Худой","Мелкий","Русский","Украинский"]
 let who2 = ["Пацанчик","Эльф","Бутерброд","Пипяу","Симпл димпл","Кролик","Инопланетянин","Мадам","Вертосексуал","Боба","Биба","Магамет","Магазин","Депутат","Кабель","Кальмар","биба","Автор","Телевизор"]
 let truefalse = ["Агась!","Неа!","Точно нет!","Наверн да","Естественно!","Ясень пень!","хз лол!","Лучше не!","Ясное дело!","Капец! тычо куку? нет конечн!","Ты чооооо! естественно да!"]
-    
+let remembered = {}
+
 
 PluginManager.add("кто",(args,bot)=>{
 	if(args.args[1] == null){
 		return (args.message.GM + "Что кто?");	
 	}
 	let naz = args.args.slice(1).join(" ");
+	let plindex = bot.players[naz] ? naz : args.message.NICK;
 	if(args.args[1].split("?").join("") === "я")
 		naz = "ты"
 	if(bot.players[naz] != null || naz === "ты")
-		return (args.message.GM + "Я думаю что " + naz + " " + who1[Math.floor(Math.random()*who1.length)] + " " + who2[Math.floor(Math.random()*who2.length)])
+		return (args.message.GM + "Я думаю что " + naz + " " + (remembered[plindex] = remembered[plindex] ? remembered[plindex] : (who1[Math.floor(Math.random()*who1.length)] + " " + who2[Math.floor(Math.random()*who2.length)]) ))
 	else
 		return (args.message.GM + "Я Думаю что " + naz + " у нас " + bot.players[Object.keys(bot.players)[Math.floor(Math.random()*Object.keys(bot.players).length)]].username)
 

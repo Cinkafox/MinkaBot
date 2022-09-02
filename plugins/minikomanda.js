@@ -3,9 +3,21 @@ const permission = require("../libs/permissions")
 const minicommands = require("../libs/MCommands")
 const sab = minicommands.ReadCommands()
 
+function replacment(text,obj){
+    const indexes = Object.keys(obj)
+    indexes.forEach(element => {text = text.replace(element,obj[element])});
+    return text
+}
+
+
 function addCommand(name,msg){
 	PluginManager.add(name,(args,bot)=>{
-		return(args.message.GM + msg.replace("%nick%",args.message.NICK).replace("%random%",bot.players[Object.keys(bot.players)[Math.floor(Math.random()*Object.keys(bot.players).length)]].username))
+		const obj = {"%nick%":args.message.NICK,"%random%":bot.players[Object.keys(bot.players)[Math.floor(Math.random()*Object.keys(bot.players).length)]].username}
+		for (let i = 0; i < args.args.length; i++) {
+			const element = args.args[i];
+			obj["%"+i+"%"] = element
+		}
+		return(args.message.GM + replacment(msg,obj))
 	})
 }
 
